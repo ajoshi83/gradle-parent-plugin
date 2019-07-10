@@ -1,0 +1,55 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'application'
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'maven-publish'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.poc'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+gradlePlugin {
+    plugins {
+        myCustomGralePlugin1 {
+            id = "com.poc.customGradlePlugin1UsingJava"
+            implementationClass = "com.poc.customGradlePlugin.CustomPlugin"
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /*compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation "org.springframework.boot:spring-boot-starter-actuator"*/
+    compile('net.sf.saxon:Saxon-HE:9.8.0-12')
+    testImplementation 'junit:junit:4.12'
+}
+
+/*bootJar {
+    baseName = project.name
+    version = project.version
+    mainClassName = 'com.poc.customGradlePlugin.CustomPlugin'
+}*/
+
+jar {
+    enabled = true
+    baseName = project.name
+    version = project.version
+    mainClassName = 'com.poc.customGradlePlugin.CustomPlugin'
+}
